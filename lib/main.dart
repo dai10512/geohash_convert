@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       labelText: '桁数（0〜7）',
-                      hintText: '5',
+                      // hintText: '5',
                     ),
                     maxLength: 1,
                   ),
@@ -104,9 +104,9 @@ extension LatAndLonExt on LatAndLon {
   String get label {
     switch (this) {
       case LatAndLon.latitude:
-        return '緯度';
+        return '緯度(-90.0 ~ 90.0)';
       case LatAndLon.longitude:
-        return '経度';
+        return '経度（-180.0 ~ 180.0）';
     }
   }
 

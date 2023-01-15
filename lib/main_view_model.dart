@@ -26,7 +26,7 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
 
   final latitudeController = TextEditingController();
   final longitudeController = TextEditingController();
-  final digitsController = TextEditingController(text: '5');
+  final digitsController = TextEditingController();
 
   double get inputLatitude =>
       double.tryParse(latitudeController.text) ?? -999.9;
@@ -66,7 +66,10 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
 
   String _toBinaryStr() {
     //二分探索初期設定
-    final v = digits! * 5 / 2;
+    int latDigits = (digits! * 5 / 2).floor();
+    int lonDigits = (digits! * 5 / 2).ceil();
+    print('latDigits:$latDigits');
+    print('lonDigits:$lonDigits');
 
     //緯度
     var minLatitude = -90.0;
@@ -80,18 +83,11 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
     double midLongitude() => (minLongitude + maxLongitude) / 2;
     var binaryLongitude = '';
 
-    //確認
-    print('latitude');
-    print('min|mid|max = $minLatitude|$midLatitude()|$maxLatitude');
-
-    print('longitude');
-    print('min|mid|max = $minLongitude|$midLongitude()|$maxLongitude');
-
     //二分探索計算
     //緯度
-    while (binaryLatitude.length < v) {
-      print('binaryLatitude:$binaryLatitude');
-      print('min|mid|max = $minLatitude|$midLatitude|$maxLatitude');
+    while (binaryLatitude.length < latDigits) {
+      // print('binaryLatitude:$binaryLatitude');
+      // print('min|mid|max = $minLatitude|$midLatitude|$maxLatitude');
 
       if (inputLatitude < midLatitude()) {
         binaryLatitude = '${binaryLatitude}0';
@@ -104,8 +100,8 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
     }
 
     //経度
-    while (binaryLongitude.length < v) {
-      print('binaryLongitude:$binaryLongitude');
+    while (binaryLongitude.length < lonDigits) {
+      // print('binaryLongitude:$binaryLongitude');
 
       if (inputLongitude < midLongitude()) {
         binaryLongitude = '${binaryLongitude}0';
@@ -121,9 +117,12 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
     print('binaryLongitude:$binaryLongitude');
     int i = 0;
     String totalBinaryStr = '';
-    while (i < v) {
+    while (i < latDigits) {
       totalBinaryStr = totalBinaryStr + binaryLongitude[i] + binaryLatitude[i];
       i++;
+    }
+    if (i < lonDigits) {
+      totalBinaryStr = totalBinaryStr + binaryLongitude[i];
     }
     print('totalBinaryStr:$totalBinaryStr');
     return totalBinaryStr;

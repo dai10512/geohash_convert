@@ -16,7 +16,7 @@ final mainViewModelProvider =
 class MainViewModelState with _$MainViewModelState {
   const factory MainViewModelState({
     @Default('') geoHashString,
-    String? firstName,
+    @Default(5) digits,
   }) = _MainViewModelState;
 }
 
@@ -27,22 +27,28 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
 
   final latitudeController = TextEditingController();
   final longitudeController = TextEditingController();
+  final digitsController = TextEditingController(text: '5');
 
   double get inputLatitude =>
       double.tryParse(latitudeController.text) ?? -999.9;
   double get inputLongitude =>
       double.tryParse(longitudeController.text) ?? -999.9;
+  int? get digits => int.tryParse(digitsController.text);
 
   bool get isRightLat => inputLatitude > -90.0 && inputLatitude < 90.0;
   bool get isRightLon => inputLongitude > -180.0 && inputLongitude < 180.0;
+  bool get isRightDigits => digits != null;
 
-  bool get canConvert => isRightLat && isRightLon;
+  bool get canConvert => isRightLat && isRightLon && isRightDigits;
 
   void _listen() {
     latitudeController.addListener(() {
       canConvert ? _calculateGeoHash() : _clearGeoHash();
     });
     longitudeController.addListener(() {
+      canConvert ? _calculateGeoHash() : _clearGeoHash();
+    });
+    digitsController.addListener(() {
       canConvert ? _calculateGeoHash() : _clearGeoHash();
     });
   }

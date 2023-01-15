@@ -66,6 +66,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 const SizedBox(height: 24),
+                const SizedBox(height: 24),
+                DropdownButton(
+                  items: const [
+                    DropdownMenuItem(
+                      value: 1,
+                      child: Text('1'),
+                    ),
+                  ],
+                  value: 1,
+                  onChanged: (value) {
+                    // setState(() {
+                    // isSelectedValue = value!;
+                    // });
+                    print(0);
+                  },
+                ),
                 Text(
                   'geoHash:${ref.watch(mainViewModelProvider.select((value) => value.geoHashString))}',
                   style: Theme.of(context).textTheme.headline4,

@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$MainViewModelState {
   dynamic get geoHashString => throw _privateConstructorUsedError;
-  String? get firstName => throw _privateConstructorUsedError;
+  dynamic get digits => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MainViewModelStateCopyWith<MainViewModelState> get copyWith =>
@@ -30,7 +30,7 @@ abstract class $MainViewModelStateCopyWith<$Res> {
           MainViewModelState value, $Res Function(MainViewModelState) then) =
       _$MainViewModelStateCopyWithImpl<$Res, MainViewModelState>;
   @useResult
-  $Res call({dynamic geoHashString, String? firstName});
+  $Res call({dynamic geoHashString, dynamic digits});
 }
 
 /// @nodoc
@@ -47,17 +47,17 @@ class _$MainViewModelStateCopyWithImpl<$Res, $Val extends MainViewModelState>
   @override
   $Res call({
     Object? geoHashString = freezed,
-    Object? firstName = freezed,
+    Object? digits = freezed,
   }) {
     return _then(_value.copyWith(
       geoHashString: freezed == geoHashString
           ? _value.geoHashString
           : geoHashString // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      firstName: freezed == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String?,
+      digits: freezed == digits
+          ? _value.digits
+          : digits // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
   }
 }
@@ -70,7 +70,7 @@ abstract class _$$_MainViewModelStateCopyWith<$Res>
       __$$_MainViewModelStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({dynamic geoHashString, String? firstName});
+  $Res call({dynamic geoHashString, dynamic digits});
 }
 
 /// @nodoc
@@ -85,15 +85,12 @@ class __$$_MainViewModelStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? geoHashString = freezed,
-    Object? firstName = freezed,
+    Object? digits = freezed,
   }) {
     return _then(_$_MainViewModelState(
       geoHashString:
           freezed == geoHashString ? _value.geoHashString! : geoHashString,
-      firstName: freezed == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String?,
+      digits: freezed == digits ? _value.digits! : digits,
     ));
   }
 }
@@ -101,17 +98,18 @@ class __$$_MainViewModelStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_MainViewModelState implements _MainViewModelState {
-  const _$_MainViewModelState({this.geoHashString = '', this.firstName});
+  const _$_MainViewModelState({this.geoHashString = '', this.digits = 5});
 
   @override
   @JsonKey()
   final dynamic geoHashString;
   @override
-  final String? firstName;
+  @JsonKey()
+  final dynamic digits;
 
   @override
   String toString() {
-    return 'MainViewModelState(geoHashString: $geoHashString, firstName: $firstName)';
+    return 'MainViewModelState(geoHashString: $geoHashString, digits: $digits)';
   }
 
   @override
@@ -121,13 +119,14 @@ class _$_MainViewModelState implements _MainViewModelState {
             other is _$_MainViewModelState &&
             const DeepCollectionEquality()
                 .equals(other.geoHashString, geoHashString) &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName));
+            const DeepCollectionEquality().equals(other.digits, digits));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(geoHashString), firstName);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(geoHashString),
+      const DeepCollectionEquality().hash(digits));
 
   @JsonKey(ignore: true)
   @override
@@ -140,12 +139,12 @@ class _$_MainViewModelState implements _MainViewModelState {
 abstract class _MainViewModelState implements MainViewModelState {
   const factory _MainViewModelState(
       {final dynamic geoHashString,
-      final String? firstName}) = _$_MainViewModelState;
+      final dynamic digits}) = _$_MainViewModelState;
 
   @override
   dynamic get geoHashString;
   @override
-  String? get firstName;
+  dynamic get digits;
   @override
   @JsonKey(ignore: true)
   _$$_MainViewModelStateCopyWith<_$_MainViewModelState> get copyWith =>

@@ -66,22 +66,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                const SizedBox(height: 24),
-                DropdownButton(
-                  items: const [
-                    DropdownMenuItem(
-                      value: 1,
-                      child: Text('1'),
+                TextFormField(
+                  controller: viewModel.digitsController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                  ],
-                  value: 1,
-                  onChanged: (value) {
-                    // setState(() {
-                    // isSelectedValue = value!;
-                    // });
-                    print(0);
-                  },
+                    labelText: '桁数（１〜7）',
+                    hintText: '例）5',
+                  ),
+                  maxLength: 1,
                 ),
+                const SizedBox(height: 24),
                 Text(
                   'geoHash:${ref.watch(mainViewModelProvider.select((value) => value.geoHashString))}',
                   style: Theme.of(context).textTheme.headline4,

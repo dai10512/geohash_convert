@@ -37,85 +37,62 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Padding(
         padding: const EdgeInsets.all(80.0),
         child: Center(
-          child: Consumer(builder: (context, ref, _) {
-            final viewModel = ref.read(mainViewModelProvider.notifier);
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextFormField(
-                  controller: viewModel.latitudeController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
+          child: Consumer(
+            builder: (context, ref, _) {
+              final viewModel = ref.read(mainViewModelProvider.notifier);
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextFormField(
+                    controller: viewModel.latitudeController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      labelText: LatAndLon.latitude.label,
+                      hintText: LatAndLon.latitude.hintText,
                     ),
-                    labelText: '緯度',
-                    hintText: '例）35.4875',
                   ),
-                ),
-                const SizedBox(height: 24),
-                TextFormField(
-                  controller: viewModel.longitudeController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
+                  const SizedBox(height: 24),
+                  TextFormField(
+                    controller: viewModel.longitudeController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      labelText: LatAndLon.longitude.label,
+                      hintText: LatAndLon.longitude.hintText,
                     ),
-                    labelText: '経度',
-                    hintText: '例）139.458',
                   ),
-                ),
-                const SizedBox(height: 24),
-                TextFormField(
-                  controller: viewModel.digitsController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
+                  const SizedBox(height: 24),
+                  TextFormField(
+                    controller: viewModel.digitsController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      labelText: '桁数（0〜7）',
+                      hintText: '5',
                     ),
-                    labelText: '桁数（１〜7）',
-                    hintText: '例）5',
+                    maxLength: 1,
                   ),
-                  maxLength: 1,
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  'geoHash:${ref.watch(mainViewModelProvider.select((value) => value.geoHashString))}',
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-                const SizedBox(height: 64),
-              ],
-            );
-          }),
+                  const SizedBox(height: 24),
+                  Text(
+                    'geoHash:${ref.watch(mainViewModelProvider.select((value) => value.geoHashString))}',
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  const SizedBox(height: 64),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
   }
-
-  // final latitudeKey = Key;
-  // final longtudeKey = Key;
-
-  // String? _validateLatitude() {
-  //   if (latitudeString.isEmpty) {
-  //     return 'フォームに値を入力してください';
-  //   }
-  //   final latitudeInt = double.parse(latitudeString);
-  //   if (latitudeInt > 90 || latitudeInt < -90) {
-  //     return '-90から90の間の小数点を含む数字を入力してください';
-  //   }
-  //   return null;
-  // }
-
-  // String? _validateLongitude() {
-  //   if (latitudeString.isEmpty) {
-  //     return 'フォームに値を入力してください';
-  //   }
-  //   final longitudeInt = double.parse(latitudeString);
-  //   if (longitudeInt > 180 || longitudeInt < -180) {
-  //     return '-180から180の間の小数点を含む数字を入力してください';
-  //   }
-  //   return null;
-  // }
 }
 
 enum LatAndLon {
@@ -124,7 +101,7 @@ enum LatAndLon {
 }
 
 extension LatAndLonExt on LatAndLon {
-  String get name {
+  String get label {
     switch (this) {
       case LatAndLon.latitude:
         return '緯度';
@@ -133,30 +110,12 @@ extension LatAndLonExt on LatAndLon {
     }
   }
 
-  String get defaultValue {
+  String get hintText {
     switch (this) {
       case LatAndLon.latitude:
-        return '35.4875';
+        return '例）35.4875';
       case LatAndLon.longitude:
-        return '139.458';
+        return '例）139.458';
     }
   }
-
-  // TextEditingController get controller {
-  //   switch (this) {
-  //     case LatAndLon.latitude:
-  //       return latitudeController;
-  //     case LatAndLon.longitude:
-  //       return longitudeController;
-  //   }
-  // }
-
-  // Key get key {
-  //   switch (this) {
-  //     case LatAndLon.latitude:
-  //       return '35.4875';
-  //     case LatAndLon.longitude:
-  //       return '139.458';
-  //   }
-  // }
 }

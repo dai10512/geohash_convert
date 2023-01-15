@@ -16,7 +16,6 @@ final mainViewModelProvider =
 class MainViewModelState with _$MainViewModelState {
   const factory MainViewModelState({
     @Default('') geoHashString,
-    @Default(5) digits,
   }) = _MainViewModelState;
 }
 
@@ -37,7 +36,7 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
 
   bool get isRightLat => inputLatitude > -90.0 && inputLatitude < 90.0;
   bool get isRightLon => inputLongitude > -180.0 && inputLongitude < 180.0;
-  bool get isRightDigits => digits != null;
+  bool get isRightDigits => digits != null && digits! < 8;
 
   bool get canConvert => isRightLat && isRightLon && isRightDigits;
 
@@ -67,6 +66,8 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
 
   String _toBinaryStr() {
     //二分探索初期設定
+    final v = digits! * 5 / 2;
+
     //緯度
     var minLatitude = -90.0;
     var maxLatitude = 90.0;
@@ -88,7 +89,7 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
 
     //二分探索計算
     //緯度
-    while (binaryLatitude.length < 16) {
+    while (binaryLatitude.length < v) {
       print('binaryLatitude:$binaryLatitude');
       print('min|mid|max = $minLatitude|$midLatitude|$maxLatitude');
 
@@ -103,7 +104,7 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
     }
 
     //経度
-    while (binaryLongitude.length < 16) {
+    while (binaryLongitude.length < v) {
       print('binaryLongitude:$binaryLongitude');
 
       if (inputLongitude < midLongitude()) {
@@ -120,7 +121,7 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
     print('binaryLongitude:$binaryLongitude');
     int i = 0;
     String totalBinaryStr = '';
-    while (i < 16) {
+    while (i < v) {
       totalBinaryStr = totalBinaryStr + binaryLongitude[i] + binaryLatitude[i];
       i++;
     }
@@ -169,16 +170,14 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
   }
 
   String _toHexString(decimalList) {
-    // final value =
     var alphabetList =
-        List.generate(25, (index) => String.fromCharCode(index + 97)).toList();
+        List.generate(26, (index) => String.fromCharCode(index + 97)).toList();
     alphabetList
         .removeWhere((e) => e == 'a' || e == 'i' || e == 'l' || e == 'o');
     print(alphabetList);
-    // print(value);
     var result = '';
     var i = 0;
-    while (i < 5) {
+    while (i < digits!) {
       if (decimalList[i] < 10) {
         result = result + decimalList[i].toString();
       } else if (decimalList[i] >= 10 && decimalList[i] < 32) {

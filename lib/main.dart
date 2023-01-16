@@ -74,8 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      labelText: '桁数（0〜7）',
-                      // hintText: '5',
+                      labelText: '桁数（0〜9）',
                     ),
                     maxLength: 1,
                   ),

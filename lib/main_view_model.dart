@@ -34,22 +34,19 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
       double.tryParse(longitudeController.text) ?? -999.9;
   int? get digits => int.tryParse(digitsController.text);
 
-  bool get isRightLat => inputLatitude > -90.0 && inputLatitude < 90.0;
-  bool get isRightLon => inputLongitude > -180.0 && inputLongitude < 180.0;
-  bool get isRightDigits => digits != null && digits! < 8;
+  bool get isRightLat => inputLatitude >= -90.0 && inputLatitude <= 90.0;
+  bool get isRightLon => inputLongitude >= -180.0 && inputLongitude <= 180.0;
+  bool get isRightDigits => digits != null && digits! <= 9;
 
   bool get canConvert => isRightLat && isRightLon && isRightDigits;
 
   void _listen() {
-    latitudeController.addListener(() {
-      canConvert ? _calculateGeoHash() : _clearGeoHash();
-    });
-    longitudeController.addListener(() {
-      canConvert ? _calculateGeoHash() : _clearGeoHash();
-    });
-    digitsController.addListener(() {
-      canConvert ? _calculateGeoHash() : _clearGeoHash();
-    });
+    latitudeController
+        .addListener(() => canConvert ? _calculateGeoHash() : _clearGeoHash());
+    longitudeController
+        .addListener(() => canConvert ? _calculateGeoHash() : _clearGeoHash());
+    digitsController
+        .addListener(() => canConvert ? _calculateGeoHash() : _clearGeoHash());
   }
 
   void _clearGeoHash() {
@@ -86,13 +83,9 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
     //二分探索計算
     //緯度
     while (binaryLatitude.length < latDigits) {
-      // print('binaryLatitude:$binaryLatitude');
-      // print('min|mid|max = $minLatitude|$midLatitude|$maxLatitude');
-
       if (inputLatitude < midLatitude()) {
         binaryLatitude = '${binaryLatitude}0';
         maxLatitude = midLatitude();
-        midLatitude;
       } else {
         binaryLatitude = '${binaryLatitude}1';
         minLatitude = midLatitude();
@@ -101,8 +94,6 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
 
     //経度
     while (binaryLongitude.length < lonDigits) {
-      // print('binaryLongitude:$binaryLongitude');
-
       if (inputLongitude < midLongitude()) {
         binaryLongitude = '${binaryLongitude}0';
         maxLongitude = midLongitude();
@@ -152,11 +143,11 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
     var totalBinaryList = [];
     var start = 0;
     var end = 5;
-    const length = 5;
+    const digits = 5;
     while (end < binaryStr.length) {
       totalBinaryList.add(binaryStr.substring(start, end));
-      start += length;
-      end += length;
+      start += digits;
+      end += digits;
     }
     var lastStr = binaryStr.substring(start, binaryStr.length);
     while (lastStr.length < 5) {

@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Geohash_convert'),
+        title: const Text('Geohash 変換'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(80.0),
@@ -80,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'geoHash:${ref.watch(mainViewModelProvider.select((value) => value.geoHashString))}',
+                    'Geohash:${ref.watch(mainViewModelProvider.select((value) => value.geoHashString))}',
                     style: Theme.of(context).textTheme.headline5,
                   ),
                   const SizedBox(height: 64),

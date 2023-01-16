@@ -83,23 +83,25 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
     //二分探索計算
     //緯度
     while (binaryLatitude.length < latDigits) {
-      if (inputLatitude < midLatitude()) {
+      final midLad = midLatitude();
+      if (inputLatitude < midLad) {
         binaryLatitude = '${binaryLatitude}0';
-        maxLatitude = midLatitude();
+        maxLatitude = midLad;
       } else {
         binaryLatitude = '${binaryLatitude}1';
-        minLatitude = midLatitude();
+        minLatitude = midLad;
       }
     }
 
     //経度
     while (binaryLongitude.length < lonDigits) {
-      if (inputLongitude < midLongitude()) {
+      final midLon = midLongitude();
+      if (inputLongitude < midLon) {
         binaryLongitude = '${binaryLongitude}0';
-        maxLongitude = midLongitude();
+        maxLongitude = midLon;
       } else {
         binaryLongitude = '${binaryLongitude}1';
-        minLongitude = midLongitude();
+        minLongitude = midLon;
       }
     }
 

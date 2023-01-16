@@ -45,25 +45,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   TextFormField(
-                    controller: viewModel.latitudeController,
+                    controller: viewModel.latController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      labelText: LatAndLon.latitude.label,
-                      hintText: LatAndLon.latitude.hintText,
+                      labelText: FormElement.latitude.label,
+                      hintText: FormElement.latitude.hintText,
                     ),
                   ),
                   const SizedBox(height: 24),
                   TextFormField(
-                    controller: viewModel.longitudeController,
+                    controller: viewModel.lonController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      labelText: LatAndLon.longitude.label,
-                      hintText: LatAndLon.longitude.hintText,
+                      labelText: FormElement.longitude.label,
+                      hintText: FormElement.longitude.hintText,
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -74,7 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      labelText: '桁数（0〜9）',
+                      labelText: FormElement.digits.label,
+                      hintText: FormElement.digits.hintText,
                     ),
                     maxLength: 1,
                   ),
@@ -94,27 +95,32 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-enum LatAndLon {
+enum FormElement {
   latitude,
   longitude,
+  digits,
 }
 
-extension LatAndLonExt on LatAndLon {
+extension FormElementExt on FormElement {
   String get label {
     switch (this) {
-      case LatAndLon.latitude:
+      case FormElement.latitude:
         return '緯度(-90.0 ~ 90.0)';
-      case LatAndLon.longitude:
+      case FormElement.longitude:
         return '経度（-180.0 ~ 180.0）';
+      case FormElement.digits:
+        return '桁数（0〜9）';
     }
   }
 
   String get hintText {
     switch (this) {
-      case LatAndLon.latitude:
+      case FormElement.latitude:
         return '例）35.4875';
-      case LatAndLon.longitude:
-        return '例）139.458';
+      case FormElement.longitude:
+        return '例）139.4580';
+      case FormElement.digits:
+        return '例）5';
     }
   }
 }

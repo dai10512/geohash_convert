@@ -24,14 +24,12 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
     _listen();
   }
 
-  final latitudeController = TextEditingController();
-  final longitudeController = TextEditingController();
+  final latController = TextEditingController();
+  final lonController = TextEditingController();
   final digitsController = TextEditingController();
 
-  double get inputLatitude =>
-      double.tryParse(latitudeController.text) ?? -999.9;
-  double get inputLongitude =>
-      double.tryParse(longitudeController.text) ?? -999.9;
+  double get inputLatitude => double.tryParse(latController.text) ?? -999.9;
+  double get inputLongitude => double.tryParse(lonController.text) ?? -999.9;
   int? get digits => int.tryParse(digitsController.text);
 
   bool get isRightLat => inputLatitude >= -90.0 && inputLatitude <= 90.0;
@@ -41,9 +39,9 @@ class MainViewModel extends StateNotifier<MainViewModelState> {
   bool get canConvert => isRightLat && isRightLon && isRightDigits;
 
   void _listen() {
-    latitudeController
+    latController
         .addListener(() => canConvert ? _calculateGeoHash() : _clearGeoHash());
-    longitudeController
+    lonController
         .addListener(() => canConvert ? _calculateGeoHash() : _clearGeoHash());
     digitsController
         .addListener(() => canConvert ? _calculateGeoHash() : _clearGeoHash());

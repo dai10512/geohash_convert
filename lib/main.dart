@@ -30,64 +30,75 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Geohash 変換'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(80.0),
-        child: Center(
-          child: Consumer(
-            builder: (context, ref, _) {
-              final viewModel = ref.read(mainViewModelProvider.notifier);
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  TextFormField(
-                    controller: viewModel.latController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
+// GestureDetector(
+//     onTap() {
+//       FocusScope.of(context).unfocus();
+//     },
+//     child: const TextField(),
+//   ),
+// )
+
+    return GestureDetector(
+      onTap: FocusScope.of(context).unfocus,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Geohash 変換'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(80.0),
+          child: Center(
+            child: Consumer(
+              builder: (context, ref, _) {
+                final viewModel = ref.read(mainViewModelProvider.notifier);
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TextFormField(
+                      controller: viewModel.latController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        labelText: FormElement.latitude.label,
+                        hintText: FormElement.latitude.hintText,
                       ),
-                      labelText: FormElement.latitude.label,
-                      hintText: FormElement.latitude.hintText,
                     ),
-                  ),
-                  const SizedBox(height: 24),
-                  TextFormField(
-                    controller: viewModel.lonController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
+                    const SizedBox(height: 24),
+                    TextFormField(
+                      controller: viewModel.lonController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        labelText: FormElement.longitude.label,
+                        hintText: FormElement.longitude.hintText,
                       ),
-                      labelText: FormElement.longitude.label,
-                      hintText: FormElement.longitude.hintText,
                     ),
-                  ),
-                  const SizedBox(height: 24),
-                  TextFormField(
-                    controller: viewModel.digitsController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
+                    const SizedBox(height: 24),
+                    TextFormField(
+                      controller: viewModel.digitsController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        labelText: FormElement.digits.label,
+                        hintText: FormElement.digits.hintText,
                       ),
-                      labelText: FormElement.digits.label,
-                      hintText: FormElement.digits.hintText,
+                      maxLength: 1,
                     ),
-                    maxLength: 1,
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    'Geohash:${ref.watch(mainViewModelProvider.select((value) => value.geoHashString))}',
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  const SizedBox(height: 64),
-                ],
-              );
-            },
+                    const SizedBox(height: 24),
+                    Text(
+                      'Geohash:${ref.watch(mainViewModelProvider.select((value) => value.geoHashString))}',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    const SizedBox(height: 64),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),

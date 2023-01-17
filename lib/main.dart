@@ -30,14 +30,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-// GestureDetector(
-//     onTap() {
-//       FocusScope.of(context).unfocus();
-//     },
-//     child: const TextField(),
-//   ),
-// )
-
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(

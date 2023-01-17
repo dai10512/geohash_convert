@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'main_view_model.dart';
@@ -72,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     TextFormField(
                       controller: viewModel.digitsController,
                       keyboardType: TextInputType.number,
+                      inputFormatters: [LengthLimitingTextInputFormatter(1)],
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -79,7 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         labelText: FormElement.digits.label,
                         hintText: FormElement.digits.hintText,
                       ),
-                      maxLength: 1,
                     ),
                     const SizedBox(height: 24),
                     Text(
